@@ -40,8 +40,8 @@ router.beforeEach(async (to, from, next) => {
     if (token) {
         if (to.path == '/login') {
             //登录了再跳到登录页面就跳到首页
-            next();
-            // next({ path: '/home' });
+            // next();
+            next({ path: '/home' });
         } else {
             //登录了没访问登录页面
             if (name) {
