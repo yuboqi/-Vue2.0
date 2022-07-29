@@ -13,6 +13,7 @@ import router from '@/router'
 Vue.config.productionTip = false
 
 import{reqGetSearchInfo} from '@/api'
+import * as API from '@/api'
 reqGetSearchInfo({})
   
 new Vue({
@@ -21,5 +22,6 @@ new Vue({
   store,
   beforeCreate(){
     Vue.prototype.$bus = this;
+    Vue.prototype.$API = API;
   }
 }).$mount('#app')
