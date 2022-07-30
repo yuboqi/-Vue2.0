@@ -6,6 +6,10 @@ import Banner from '@/components/Banner'
 import Pagination from '@/components/Pagination'
 import "swiper/css/swiper.css"
 import '@/mock/mockServer'
+import { Button,MessageBox} from 'element-ui'
+Vue.component(Button.name, Button);
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
 Vue.component(TypeNav.name,TypeNav)
 Vue.component(Pagination.name,Pagination)
 Vue.component(Banner.name,Banner)

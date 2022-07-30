@@ -65,7 +65,7 @@
         <div class="hr"></div>
 
         <div class="submit">
-          <a class="btn">立即支付</a>
+          <a class="btn" @click="open">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
@@ -82,11 +82,15 @@
 </template>
 
 <script>
+  import QRCode from 'qrcode'
+import { set } from 'vue'
   export default {
     name: 'Pay',
     data(){
       return{
-        payInfo:{}
+        payInfo:{},
+        timer:null,
+        code:''
       }
     },
     computed:{
@@ -98,14 +102,62 @@
       this.getPayInfo()
     },
     methods:{
-     async getPayInfo(){
+    async getPayInfo(){
       let result = await this.$API.reqPayInfo(this.orderid)
       if(result.code==200){
         this.payInfo = result.data
       }else{
         alert(result.message)
       }
+      },
+    async open() {
+        //生成二维码
+      let url = await QRCode.toDataURL(this.payInfo.codeUrl)
+      
+        this.$alert(`<img src="${url}"></img>`, '微信支付', {
+          dangerouslyUseHTMLString: true,
+          center:true,
+          showCancelButton:true,
+          cancelButtonText:"支付遇到了问题",
+          confirmButtonText:"支付已完成",
+          showClose:false,
+          beforeClose:(action,instance,done)=>{
+            if(action=='confirm'){
+              if(this.code==200){//改为支付中也跳转
+                clearInterval(this.timer)
+                this.timer=null
+                 done()
+                 this.$router.push('/paysuccess')
+              }else{
+                clearInterval(this.timer)
+                this.timer=null
+                done()
+                alert('支付失败')
+              }
+            }else{
+              clearInterval(this.timer)
+              this.timer=null
+              done()
+            }
+          }
+        });
+      
+      if(!this.timer){
+        this.timer = setInterval(async()=>{
+         let result =await this.$API.reqPayStatus(this.orderid)
+         if(result.code==200){
+          clearInterval(this.timer)
+          this.time =null
+          this.code = result.code
+          this.$msgbox.close()
+          this.$router.push('/paysuccess')
+         }else{
+          this.code = result.code//205也跳转
+         }
+         console.log(this.code);
+        },1000)
       }
+      },
     }
   }
 </script>
