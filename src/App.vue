@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header></Header>
+        <Header v-show="$route.meta.showHeader"></Header>
         <router-view></router-view>
         <Footer v-show="$route.meta.showFooter"></Footer>
     </div>

@@ -8,47 +8,53 @@ import ShopCart from '@/pages/ShopCart'
 import Trade from '@/pages/Trade'
 import Pay from '@/pages/Pay'
 import PaySuccess from '@/pages/PaySuccess'
+import Error from '@/pages/Error'
 export default[
+    {
+        path:'/error',
+        component:Error,
+        meta:{showFooter:false,showHeader:false}
+    },
     {
         path:'/paysuccess',
         component:PaySuccess,
-        meta:{showFooter:true}
+        meta:{showFooter:true,showHeader:true}
     },
     {
         path:'/pay',
         component:Pay,
-        meta:{showFooter:true}
+        meta:{showFooter:true,showHeader:true}
     },
     {
         path:'/trade',
         component:Trade,
-        meta:{showFooter:true}
+        meta:{showFooter:true,showHeader:true}
     },
     {
         path:'/shopcart',
         component:ShopCart,
-        meta:{showFooter:true}
+        meta:{showFooter:true,showHeader:true}
     },
     {
         path:'/addcartsuccess',
         component:AddCartSuccess,
-        meta:{showFooter:true}
+        meta:{showFooter:true,showHeader:true}
     },
     {
         path:'/detail/:skuid',
         component:Detail,
-        meta:{showFooter:true}
+        meta:{showFooter:true,showHeader:true}
     },
     {
         path:'/home',
         component:Home,
-        meta:{showFooter:true}
+        meta:{showFooter:true,showHeader:true}
     },
     {
         name:'search',
         path:'/search/:keyword?',
         component:Search,
-        meta:{showFooter:true},
+        meta:{showFooter:true,showHeader:true},
         props($route){
             return{
                 keyword:$route.params.keyword

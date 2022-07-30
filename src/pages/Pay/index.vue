@@ -123,7 +123,7 @@ import { set } from 'vue'
           showClose:false,
           beforeClose:(action,instance,done)=>{
             if(action=='confirm'){
-              if(this.code==200){//改为支付中也跳转
+              if(this.code==205){//改为支付中也跳转
                 clearInterval(this.timer)
                 this.timer=null
                  done()
