@@ -55,14 +55,15 @@ router.beforeEach(async (to, from, next) => {
                     store.commit('CLEARUSERINFO');
                     next({ path: '/login' });
                 }
-
             }
-
-
         }
     } 
     else {
-        next();
+        if(to.path=='/trade'||to.path=='/pay' ||to.path=='/paysuccess'){
+            next({ path: '/error' });
+        }else{
+            next();
+        }
     }
 })
 
