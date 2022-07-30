@@ -32,6 +32,11 @@ const actions = {
        if(result.code==200){
               commit('USERLOGIN',result.data.token)
               setToken(result.data.token)
+              setTimeout(()=>{
+                state.token = '';
+                state.userInfo = {};
+                removetoken();
+              },3600000)//一小时自动退出
               return 'ok'
        }else{
         Promise.reject(new Error('登录失败'))
