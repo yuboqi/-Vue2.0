@@ -101,6 +101,13 @@ import { set } from 'vue'
     mounted() {
       this.getPayInfo()
     },
+    beforeRouteLeave(to, from, next) {
+      if(this.code==205){//未支付也跳转,而且必须点击一下支付赋值给data才能跳转
+        next();
+      }else{
+        next(false);
+      }
+    },
     methods:{
     async getPayInfo(){
       let result = await this.$API.reqPayInfo(this.orderid)

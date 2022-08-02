@@ -59,7 +59,11 @@ router.beforeEach(async (to, from, next) => {
         }
     } 
     else {
-        if(to.path=='/trade'||to.path=='/pay' ||to.path=='/paysuccess'){
+        if(to.path.indexOf('/trade')!=-1||to.path.indexOf('/center')!=-1){
+            alert('请先登录');
+            next('/login?redirect='+to.path);
+        }
+        else if(to.path.indexOf('/success')!=-1||to.path.indexOf('/pay')!=-1 ){
             next({ path: '/error' });
         }else{
             next();
